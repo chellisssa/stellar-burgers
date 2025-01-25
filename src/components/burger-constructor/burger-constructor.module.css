@@ -1,0 +1,12 @@
+.BurgerConstructor {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 52px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+}

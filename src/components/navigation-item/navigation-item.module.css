@@ -1,0 +1,25 @@
+.navigationItem {
+    color: var(--text-dark-grey);
+    transition: color var(--default-transition);
+}
+
+.navigationItem:hover {
+    color: var(--text-primary-light);
+}
+
+.navigationItem svg {
+    transition: fill var(--default-transition);
+}
+
+.navigationItem:hover svg {
+    fill: var(--text-primary-light) !important;
+}
+
+.navigationItem._active {
+    color: var(--text-primary-light);
+}
+
+.link {
+    display: flex;
+    align-items: center;
+}

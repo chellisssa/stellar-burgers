@@ -1,0 +1,11 @@
+.BurgerIngredients {
+    flex-shrink: 0;
+    width: 600px;
+    height: calc(100vh - var(--header-height) - 40px);
+    overflow: hidden;
+}
+
+.scrolled {
+    padding-bottom: 40px;
+    overflow-y: auto;
+}
