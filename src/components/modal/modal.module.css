@@ -1,0 +1,49 @@
+.Modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.Modal.active {
+    opacity: 1;
+}
+
+.content {
+    position: relative;
+    width: 720px;
+    border-radius: 40px;
+    border: 1px solid var(--interface-modal-edge);
+    background-color: var(--interface-modal-bg);
+}
+
+.header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 64px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.closeButton svg {
+    transition: var(--default-transition);
+}
+
+.closeButton:hover svg {
+    fill: var(--interface-purple-blue);
+}

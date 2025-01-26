@@ -1,10 +1,11 @@
+import { IIngredient } from "../../types/ingredient.ts";
 import { AppHeader } from '../app-header/AppHeader.tsx';
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.tsx";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor.tsx";
+import { Loading } from "../loading/loading.tsx";
+import { Error} from "../error/error.tsx";
 import { useFetch } from "../../hooks/useFetch.ts";
 import { BASE_URL} from '../../utils/constants.ts';
-import { Loading } from "../loading/loading.tsx";
-import { IIngredient } from "../../types/ingredient.ts";
 
 function App() {
     const { payload, loading, error } = useFetch<{data: IIngredient[]}>(BASE_URL);
@@ -15,7 +16,7 @@ function App() {
             <AppHeader></AppHeader>
 
             {loading && <Loading />}
-            {error && <p>Error: {error}</p>}
+            {error && <Error />}
             {
                 ingredients &&
                 <div
@@ -28,7 +29,9 @@ function App() {
                     />
                     <BurgerConstructor ingredients={ingredients}/>
                 </div>
+
             }
+
         </>
     )
 }

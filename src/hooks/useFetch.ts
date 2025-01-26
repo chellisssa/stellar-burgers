@@ -29,12 +29,13 @@ export function useFetch<T>(url: string, options?: RequestInit) {
     const fetchData = async () => {
         dispatch({ type: 'FETCH_LOADING' });
         try {
-            // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-            // await delay(100000);
             const response = await fetch(url, options);
-            const result: T = await response.json();
-            dispatch({ type: 'FETCH_SUCCESS', payload: result });
+            if (response.ok) {
+                const result: T = await response.json();
+                dispatch({ type: 'FETCH_SUCCESS', payload: result });
+            } else {
+                throw new Error(`useFetch Error: ${response.statusText}`);
+            }
         } catch (error) {
             dispatch({ type: 'FETCH_FAILURE', payload: (error as Error).message });
         }

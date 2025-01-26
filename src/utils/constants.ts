@@ -57,7 +57,18 @@ export const BUTTON_NAME = {
     place_order: 'Оформить заказ'
 }
 
-export const CONSTRUCTOR_ITEM_PARAMS = {
-    height: 80,
-    gap: 16,
+export const MACRONUTRIENTS = {
+    calories: 'Калории,ккал',
+    proteins: 'Белки, г',
+    fat: 'Жиры, г',
+    carbohydrates: 'Углеводы, г',
+}
+
+export const INGREDIENT_DETAILS_TITLE = 'Детали ингредиента';
+
+export const ORDER_DETAILS = {
+    number: '034536',
+    label: 'идентификатор заказа',
+    preparationLabel: 'Ваш заказ начали готовить',
+    waitLabel: 'Дождитесь готовности на орбитальной станции',
 }

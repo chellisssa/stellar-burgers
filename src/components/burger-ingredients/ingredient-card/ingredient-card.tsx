@@ -4,11 +4,12 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 
 interface IProps {
     ingredient: IIngredient;
+    onClick: () => void;
 }
 
-export function IngredientCard({ingredient}: IProps) {
+export function IngredientCard({ ingredient, onClick}: IProps) {
     return (
-        <li className={styles.IngredientCard}>
+        <li className={styles.IngredientCard} onClick={onClick}>
             <Counter count={1} />
             <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
             <p className={ `${styles.price} pt-1` }>

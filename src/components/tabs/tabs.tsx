@@ -16,7 +16,7 @@ export function Tabs({ tabs, className }: IProps) {
             { tabs.map((tab: IChoice) => (
                 <Tab
                     key={tab.value}
-                    value={tab.value}
+                    value={tab.value as string}
                     active={current === tab.value}
                     onClick={setCurrent}
                 >

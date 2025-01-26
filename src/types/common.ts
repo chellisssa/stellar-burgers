@@ -1,4 +1,4 @@
 export interface IChoice {
     label: string;
-    value: string;
+    value: string | number;
 }
