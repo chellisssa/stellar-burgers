@@ -1,0 +1,26 @@
+.header {
+    position: relative;
+    background-color: var(--interface-modal-bg);
+}
+
+.logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 290px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 -20px;
+}
+
+.navigationList {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
