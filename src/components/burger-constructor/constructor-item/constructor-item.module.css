@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.ConstructorItem._draggable {
+    cursor: grab;
+}
+
 .icon {
     position: absolute;
     top: 50%;
@@ -9,4 +13,13 @@
     width: 24px;
     height: 24px;
     transform: translateY(-50%);
+}
+
+:global(.constructor-element) {
+    border: 1px solid transparent;
+    transition: border .3s ease;
+}
+
+.ConstructorItem._active :global(.constructor-element) {
+    border: 1px solid var(--text-primary-light);
 }
