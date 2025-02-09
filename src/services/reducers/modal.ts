@@ -3,7 +3,8 @@ import { IModalState } from "../../types/states.ts";
 
 const initialState: IModalState = {
     isOpen: false,
-    type: null,
+    title: '',
+    children: null,
     onClose: null,
 }
 
@@ -13,14 +14,16 @@ export const modalReducer = (state: IModalState = initialState, action) => {
             return {
                 ...state,
                 isOpen: true,
-                type: action.payload,
-                onClose: action.onClose,
+                title: action.payload.title || '',
+                children: action.payload.children,
+                onClose: action.payload.onClose || null,
             }
         case CLOSE_MODAL:
             return {
                 ...state,
                 isOpen: false,
-                type: null,
+                title: '',
+                children: null,
                 onClose: null,
             }
         default:

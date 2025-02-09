@@ -1,10 +1,10 @@
 import styles from './order-details.module.css';
 import doneImg from '../../../images/done.png';
 import { ORDER_DETAILS } from "../../../utils/constants.ts";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks/services.ts";
 
 export function OrderDetails() {
-    const { orderCode } = useSelector(state => state.order);
+    const { orderCode } = useAppSelector(state => state.order);
     return (
         <div className={`${styles.OrderDetails} pb-15`}>
             {orderCode &&

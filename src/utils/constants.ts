@@ -3,8 +3,11 @@ import type { INavigationItem } from "../types/navigation.ts";
 import type { IChoice } from "../types/common.ts";
 import { IngredientTypeEnum } from "../types/ingredient.ts";
 
-export const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
-export const ORDER_URL = 'https://norma.nomoreparties.space/api/orders';
+export const BASE_URL = 'https://norma.nomoreparties.space/api/';
+export const ENDPOINTS = {
+    ingredients: BASE_URL + 'ingredients',
+    order: BASE_URL + 'orders',
+}
 
 export const NAVIGATION: INavigationItem[][] = [
     [

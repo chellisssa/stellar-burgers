@@ -1,11 +1,12 @@
 import styles from './ingredients-group.module.css';
 import { IIngredient } from "../../../types/ingredient.ts";
 import { IngredientCard } from "../ingredient-card/ingredient-card.tsx";
-import { useDispatch } from "react-redux";
 import { RESET_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from "../../../services/actions/current-ingredient.ts";
 import { OPEN_MODAL } from "../../../services/actions/modal.ts";
 import { forwardRef } from "react";
-import { ModalTypeEnum } from "../../../types/states.ts";
+import { IngredientDetails } from "../../modal/ingredient-details/ingredient-details.tsx";
+import { INGREDIENT_DETAILS_TITLE } from "../../../utils/constants.ts";
+import { useAppDispatch } from "../../../hooks/services.ts";
 
 interface IProps {
     title: string;
@@ -13,14 +14,17 @@ interface IProps {
 }
 
 export const IngredientsGroup = forwardRef<HTMLDivElement, IProps>(({title, ingredients}, ref) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
      function clickIngredient(el: IIngredient) {
          dispatch({ type: SET_CURRENT_INGREDIENT, payload: el});
          dispatch({
              type: OPEN_MODAL,
-             payload: ModalTypeEnum.IngredientDetails,
-             onClose: () => dispatch({ type: RESET_CURRENT_INGREDIENT })
+             payload: {
+                 title: INGREDIENT_DETAILS_TITLE,
+                 children: <IngredientDetails />,
+                 onClose: () => dispatch({ type: RESET_CURRENT_INGREDIENT })
+             },
          });
     }
 

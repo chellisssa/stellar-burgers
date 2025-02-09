@@ -1,9 +1,9 @@
 import styles from './ingredient-card.module.css';
 import { DragTypeEnum, IIngredient, IngredientTypeEnum } from "../../../types/ingredient.ts";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useDrag } from 'react-dnd';
+import { useAppSelector } from "../../../hooks/services.ts";
 
 interface IProps {
     ingredient: IIngredient;
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export function IngredientCard({ ingredient, onClick}: IProps) {
-    const { bun, filling } = useSelector(state => state.currentBurger);
+    const { bun, filling } = useAppSelector(state => state.currentBurger);
     const [count, setCount] = useState<number>(0);
     const dragTarget = useRef<HTMLLIElement | null>(null);
     const [{opacity}, drag] = useDrag(() => ({

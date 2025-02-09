@@ -2,33 +2,14 @@ import styles from './modal.module.css';
 import ReactDOM from "react-dom";
 import { ModalOverlay } from "./modal-overlay/modal-overlay.tsx";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import { INGREDIENT_DETAILS_TITLE } from "../../utils/constants.ts";
-import { OrderDetails } from "./order-details/order-details.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { CLOSE_MODAL } from "../../services/actions/modal.ts";
-import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
-import { ModalTypeEnum } from "../../types/states.ts";
-
-interface IProps {
-    type: string;
-    onClose: () => void;
-}
-
-const modalType = {
-    [ModalTypeEnum.OrderDetails]: {
-        title: '',
-        children: <OrderDetails />
-    },
-    [ModalTypeEnum.IngredientDetails]: {
-        title: INGREDIENT_DETAILS_TITLE,
-        children: <IngredientDetails />
-    }
-}
+import { renderModalContent } from "../common/render-modal-content.tsx";
+import { useAppDispatch, useAppSelector } from "../../hooks/services.ts";
 
 export function Modal() {
-    const { isOpen, type, onClose } = useSelector((state) => state.modal);
-    const dispatch = useDispatch();
+    const { isOpen, title, children, onClose } = useAppSelector((state) => state.modal);
+    const dispatch = useAppDispatch();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -61,8 +42,8 @@ export function Modal() {
             <div className={`${styles.content} pt-10 pr-10 pb-15 pl-10`}>
                 <header className={styles.header}>
                     {
-                        modalType[type]?.title &&
-                        <h3 className="text text_type_main-large">{modalType[type].title}</h3>
+                        title &&
+                        <h3 className="text text_type_main-large">{title}</h3>
                     }
                     <button
                         className={styles.closeButton}
@@ -72,7 +53,11 @@ export function Modal() {
                     </button>
                 </header>
                 <main>
-                    {modalType[type]?.children}
+                    {
+                        React.isValidElement(children)
+                            ? children
+                            : renderModalContent(children)
+                    }
                 </main>
             </div>
         </div>,

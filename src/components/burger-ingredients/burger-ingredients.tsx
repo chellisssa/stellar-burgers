@@ -1,11 +1,11 @@
 import { MutableRefObject, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import styles from './burger-ingredients.module.css';
 import { IGroupedIngredient, IIngredient } from "../../types/ingredient.ts";
 import { IChoice } from "../../types/common.ts";
 import { INGREDIENTS_TITLE, TABS, TYPE_TO_GROUP_NAME } from "../../utils/constants.ts";
 import { Tabs } from "../tabs/tabs.tsx";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group.tsx";
+import { useAppSelector } from "../../hooks/services.ts";
 
 const orderMap: Record<string, number> = TABS.reduce((acc: Record<string, number>, tab:IChoice, index: number): Record<string, number> => {
     acc[tab.label] = index;
@@ -13,7 +13,7 @@ const orderMap: Record<string, number> = TABS.reduce((acc: Record<string, number
 }, {} as Record<string, number>);
 
 export function BurgerIngredients() {
-    const { ingredients } = useSelector(state => state.ingredients);
+    const { ingredients } = useAppSelector(state => state.ingredients);
     const [scrolledHeight, setScrolledHeight] = useState<number>(0);
     const [activeTab, setActiveTab] = useState(TABS[0].label);
     const scrolledRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);

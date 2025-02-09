@@ -1,6 +1,7 @@
 import { IIngredient } from "./ingredient.ts";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../main.tsx";
+import { AppStore } from "../main.tsx";
+import React from "react";
 
 export interface IIngredientsState {
     ingredients: IIngredient[];
@@ -24,20 +25,9 @@ export interface IOrderState {
     orderError: boolean;
 }
 
-export enum ModalTypeEnum {
-    OrderDetails = 'ORDER_DETAILS',
-    IngredientDetails = 'INGREDIENT_DETAILS',
-}
-
 export interface IModalState {
     isOpen: boolean,
-    type: ModalTypeEnum | null,
+    title: string,
     onClose: () => void,
+    children: React.ReactNode | React.ComponentType | null,
 }
-
-export interface IAction {
-    type: string;
-    payload?: unknown;
-}
-
-export type AppDispatch = ThunkDispatch<AppState, undefined, IAction>;

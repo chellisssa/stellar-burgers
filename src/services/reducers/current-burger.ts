@@ -1,5 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
-import { SET_BUN, SET_FILLING, DELETE_FILLING, MOVE_FILLING, UPDATE_FILLINGS } from '../actions/current-burger.ts';
+import {
+    SET_BUN,
+    SET_FILLING,
+    DELETE_FILLING,
+    MOVE_FILLING,
+    UPDATE_FILLINGS,
+    RESET_BURGER
+} from '../actions/current-burger.ts';
 import { ICurrentBurgerState } from "../../types/states.ts";
 
 const initialState: ICurrentBurgerState = {
@@ -10,21 +16,21 @@ const initialState: ICurrentBurgerState = {
 export const currentBurgerReducer = (state: ICurrentBurgerState = initialState, action) => {
     switch (action.type) {
         case SET_BUN:
-            if (!action.item) {
+            if (!action.payload) {
                 console.warn('SET_BUN: no element passed');
                 return state;
             }
 
             return {
                 ...state,
-                bun: action.item
+                bun: action.payload
             }
         case SET_FILLING:
             return {
                 ...state,
                 filling: [
                     ...state.filling,
-                    { ...action.item, tempId: uuidv4() },
+                    action.payload,
                 ]
             }
         case DELETE_FILLING:
@@ -47,6 +53,12 @@ export const currentBurgerReducer = (state: ICurrentBurgerState = initialState, 
             return {
                 ...state,
                 filling: [...action.payload],
+            }
+        case RESET_BURGER:
+            return {
+                ...state,
+                bun: null,
+                filling: [],
             }
     }
     return state;

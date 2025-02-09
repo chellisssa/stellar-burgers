@@ -1,14 +1,13 @@
 import styles from "./order-sum.module.css";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BUTTON_NAME, ORDER_ERROR_MESSAGE } from "../../../utils/constants.ts";
-import { useDispatch, useSelector } from "react-redux";
 import { setOrder } from "../../../services/actions/order.ts";
-import { AppDispatch } from "../../../types/states.ts";
+import { useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
 
 export function OrderSum() {
-    const { totalPrice, orderLoading, orderError } = useSelector(state => state.order);
-    const { bun } = useSelector(state => state.currentBurger);
-    const dispatch = useDispatch<AppDispatch>();
+    const { totalPrice, orderLoading, orderError } = useAppSelector(state => state.order);
+    const { bun } = useAppSelector(state => state.currentBurger);
+    const dispatch = useAppDispatch();
 
     function placeOrder() {
         dispatch(setOrder());

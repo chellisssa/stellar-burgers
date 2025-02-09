@@ -4,9 +4,8 @@ import type { Identifier, XYCoord } from 'dnd-core';
 import styles from './constructor-item.module.css';
 import { deleteIngredient, UPDATE_FILLINGS } from "../../../services/actions/current-burger.ts";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { DragTypeEnum } from "../../../types/ingredient.ts";
-import { AppDispatch } from "../../../types/states.ts";
+import { useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
 
 interface IProps {
     id?: string;
@@ -28,8 +27,8 @@ interface DragItem {
 
 export function ConstructorItem({id, type, name, image, price, isLocked, isActive, index, moveCard}: IProps) {
     const initialCardsRef = useRef<string[]>([]);
-    const { filling } = useSelector(state => state.currentBurger);
-    const dispatch = useDispatch<AppDispatch>();
+    const { filling } = useAppSelector(state => state.currentBurger);
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [{opacity}, drag] = useDrag({

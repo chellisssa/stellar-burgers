@@ -1,5 +1,4 @@
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { DragTypeEnum, type IIngredient, IngredientTypeEnum, } from "../../types/ingredient.ts";
 import styles from './burger-constructor.module.css';
 import { OrderSum } from "./order-sum/order-sum.tsx";
@@ -7,12 +6,12 @@ import { ConstructorItem } from "./constructor-item/constructor-item.tsx";
 import { EmptyItem } from "./empty-item/empty-item.tsx";
 import { useDrop } from 'react-dnd';
 import { MOVE_FILLING, selectIngredient } from "../../services/actions/current-burger.ts";
-import { AppDispatch } from "../../types/states.ts";
 import { EMPTY_BURGER } from "../../utils/constants.ts";
+import { useAppDispatch, useAppSelector } from "../../hooks/services.ts";
 
 export function BurgerConstructor() {
-    const { bun, filling } = useSelector(state => state.currentBurger);
-    const dispatch = useDispatch<AppDispatch>();
+    const { bun, filling } = useAppSelector(state => state.currentBurger);
+    const dispatch = useAppDispatch();
     const [maxListHeight, setMaxListHeight] = useState<number>(0);
     const listRef: MutableRefObject<HTMLUListElement | null> = useRef<HTMLUListElement | null>(null);
     const dropTarget = useRef<HTMLUListElement | null>(null);
