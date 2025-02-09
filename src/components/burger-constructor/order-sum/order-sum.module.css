@@ -4,3 +4,8 @@
     align-items: center;
     gap: 40px;
 }
+
+.error {
+    text-align: right;
+    color: var(--colors-interface-error);
+}

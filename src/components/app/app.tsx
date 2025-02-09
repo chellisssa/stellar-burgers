@@ -4,34 +4,39 @@ import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.tsx"
 import { BurgerConstructor } from "../burger-constructor/burger-constructor.tsx";
 import { Loading } from "../loading/loading.tsx";
 import { Error} from "../error/error.tsx";
-import { useFetch } from "../../hooks/useFetch.ts";
-import { BASE_URL} from '../../utils/constants.ts';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getIngredients } from "../../services/actions/ingredients.ts";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-    const { payload, loading, error } = useFetch<{data: IIngredient[]}>(BASE_URL);
-    const ingredients = payload?.data as IIngredient[];
+    const { ingredients, ingredientsLoading, ingredientsError } = useSelector(state => state.ingredients);
+    const dispatch = useDispatch();
+
+    useEffect(()=> {
+        dispatch(getIngredients());
+    }, [])
 
     return (
         <>
             <AppHeader></AppHeader>
 
-            {loading && <Loading />}
-            {error && <Error />}
-            {
-                ingredients &&
-                <div
-                    className="container"
-                    style={{ display: 'flex', gap: '40px' }}
-                >
-                    <BurgerIngredients
-                        title="Соберите бургер"
-                        ingredients={ingredients}
-                    />
-                    <BurgerConstructor ingredients={ingredients}/>
-                </div>
+            {ingredientsLoading && <Loading />}
+            {ingredientsError && <Error />}
 
-            }
-
+                {
+                    ingredients && ingredients.length > 0 &&
+                    <div
+                        className="container"
+                        style={{ display: 'flex', gap: '40px' }}
+                    >
+                        <DndProvider debugMode={true} backend={HTML5Backend}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </DndProvider>
+                    </div>
+                }
         </>
     )
 }

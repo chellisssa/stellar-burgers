@@ -1,0 +1,22 @@
+.EmptyItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    border-radius: var(--common-border-radius-s);
+    background-color: var(--background-element);
+    border: 1px solid transparent;
+    transition: border .3s ease;
+}
+
+.EmptyItem._top {
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.EmptyItem._bottom {
+    border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.EmptyItem._active {
+    border: 1px solid var(--text-primary-light);
+}
