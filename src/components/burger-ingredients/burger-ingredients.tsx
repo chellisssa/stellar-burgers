@@ -6,6 +6,7 @@ import { INGREDIENTS_TITLE, TABS, TYPE_TO_GROUP_NAME } from "../../utils/constan
 import { Tabs } from "../tabs/tabs.tsx";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group.tsx";
 import { useAppSelector } from "../../hooks/services.ts";
+import { ROUTES } from "../../utils/constants/routes.ts";
 
 const orderMap: Record<string, number> = TABS.reduce((acc: Record<string, number>, tab:IChoice, index: number): Record<string, number> => {
     acc[tab.label] = index;
@@ -68,7 +69,7 @@ export function BurgerIngredients() {
 
     const handleTabClick = (tabId: string) => {
         setActiveTab(tabId);
-        const targetIndex = groupedIngredients.findIndex(group => group.groupName === tabId);
+        const targetIndex = groupedIngredients.findIndex((group: IGroupedIngredient) => group.groupName === tabId);
         const targetElement = groupRefs.current[targetIndex];
 
         if (targetElement && scrolledRef.current) {
@@ -98,12 +99,13 @@ export function BurgerIngredients() {
                     style={{ height: scrolledHeight + 'px' }}
                     className={styles.scrolled}
                 >
-                    {groupedIngredients.map((group: IGroupedIngredient, index) => (
+                    {groupedIngredients.map((group: IGroupedIngredient, index: number) => (
                         <IngredientsGroup
                             key={group.groupName}
                             title={group.groupName}
                             ingredients={group.ingredients}
                             ref={(el) => (groupRefs.current[index] = el)}
+                            from={ROUTES.base}
                         />
                     ))}
                 </div>

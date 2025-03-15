@@ -2,15 +2,23 @@ import styles from "./order-sum.module.css";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BUTTON_NAME, ORDER_ERROR_MESSAGE } from "../../../utils/constants.ts";
 import { setOrder } from "../../../services/actions/order.ts";
-import { useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
+import { AppThunkDispatch, useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../utils/constants/routes.ts";
 
 export function OrderSum() {
     const { totalPrice, orderLoading, orderError } = useAppSelector(state => state.order);
+    const { user } = useAppSelector(state => state.auth);
     const { bun } = useAppSelector(state => state.currentBurger);
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch<AppThunkDispatch>();
+    const navigate = useNavigate();
 
     function placeOrder() {
-        dispatch(setOrder());
+        if (!user.email) {
+            navigate(ROUTES.login);
+        } else {
+            dispatch(setOrder());
+        }
     }
 
     return (

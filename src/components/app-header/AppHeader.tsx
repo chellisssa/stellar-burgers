@@ -2,9 +2,11 @@ import styles from './app-header.module.css';
 import type { INavigationItem } from '../../types/navigation.ts';
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavigationItem } from '../navigation-item/navigation-item.tsx';
-import { NAVIGATION, ACTIVE_PAGE } from "../../utils/constants.ts";
+import { NAVIGATION } from "../../utils/constants.ts";
+import { useLocation } from "react-router-dom";
 
 export function AppHeader () {
+    const location = useLocation();
 
     return (
         <header className={`${styles.header} pt-4 pb-4`}>
@@ -21,7 +23,8 @@ export function AppHeader () {
                                     key={el.id}
                                     name={el.name}
                                     icon={el.icon}
-                                    isActive={el.id === ACTIVE_PAGE}
+                                    isActive={el.link === location.pathname}
+                                    link={el.link}
                                 />
                             ))}
                         </ul>

@@ -1,0 +1,24 @@
+.BaseForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 480px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.button {
+    width: fit-content;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}

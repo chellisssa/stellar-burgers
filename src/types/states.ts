@@ -1,6 +1,4 @@
 import { IIngredient } from "./ingredient.ts";
-import { ThunkDispatch } from "redux-thunk";
-import { AppStore } from "../main.tsx";
 import React from "react";
 
 export interface IIngredientsState {
@@ -28,6 +26,14 @@ export interface IOrderState {
 export interface IModalState {
     isOpen: boolean,
     title: string,
-    onClose: () => void,
+    onClose: (() => void) | null,
     children: React.ReactNode | React.ComponentType | null,
+}
+
+export interface IAuthState {
+    user: {
+        email: string,
+        name: string,
+        accessToken: string,
+    },
 }

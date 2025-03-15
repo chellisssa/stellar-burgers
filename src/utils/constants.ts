@@ -2,11 +2,21 @@ import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer
 import type { INavigationItem } from "../types/navigation.ts";
 import type { IChoice } from "../types/common.ts";
 import { IngredientTypeEnum } from "../types/ingredient.ts";
+import { ROUTES } from "./constants/routes.ts";
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 export const ENDPOINTS = {
     ingredients: BASE_URL + 'ingredients',
     order: BASE_URL + 'orders',
+    auth: {
+        login: BASE_URL + 'auth/login',
+        register: BASE_URL + 'auth/register',
+        logout: BASE_URL + 'auth/logout',
+        token: BASE_URL + 'auth/token',
+        user: BASE_URL + 'auth/user',
+    },
+    passwordReset: BASE_URL + 'password-reset',
+    confirmPasswordReset: BASE_URL + 'password-reset/reset',
 }
 
 export const NAVIGATION: INavigationItem[][] = [
@@ -16,12 +26,14 @@ export const NAVIGATION: INavigationItem[][] = [
             id: 'constructor',
             icon: BurgerIcon,
             position: 'left',
+            link: ROUTES.base,
         },
         {
             name: 'Лента заказов',
             id: 'orders',
             icon: ListIcon,
             position: 'left',
+            link: ROUTES.orders,
         },
     ],
     [
@@ -30,6 +42,7 @@ export const NAVIGATION: INavigationItem[][] = [
             id: 'client',
             icon: ProfileIcon,
             position: 'right',
+            link: ROUTES.profile,
         }
     ]
 ];
@@ -85,4 +98,9 @@ export const ORDER_ERROR_MESSAGE = 'Ваш заказ исчез в чёрной
 export const EMPTY_BURGER = {
     bun: 'Выберите булку',
     filling: 'Выберите начинку',
+}
+
+export const LOADING = {
+    ingredients: 'Сканируем космическую кладовую... Ингредиенты телепортируются!',
+    ingredient: 'Ингредиент в пути... Скоро всё будет на месте!',
 }

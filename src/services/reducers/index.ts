@@ -4,6 +4,7 @@ import { currentBurgerReducer } from "./current-burger.ts";
 import { currentIngredientReducer } from "./current-ingredient.ts";
 import { orderReducer } from "./order.ts";
 import { modalReducer } from "./modal.ts";
+import { authReducer } from "./auth.ts";
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
     currentIngredient: currentIngredientReducer,
     order: orderReducer,
     modal: modalReducer,
+    auth: authReducer,
 });

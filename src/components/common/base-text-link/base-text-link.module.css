@@ -1,0 +1,13 @@
+.text {
+    color: var(--text-inactive-color);
+}
+
+.link {
+    display: inline-block;
+    color: var(--colors-interface-accent);
+    transition: color .3s ease;
+}
+
+.link:hover {
+    color: var(--text-primary-color);
+}
