@@ -3,7 +3,11 @@ import type { INavigationItem } from "../types/navigation.ts";
 import type { IChoice } from "../types/common.ts";
 import { IngredientTypeEnum } from "../types/ingredient.ts";
 
-export const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
+export const BASE_URL = 'https://norma.nomoreparties.space/api/';
+export const ENDPOINTS = {
+    ingredients: BASE_URL + 'ingredients',
+    order: BASE_URL + 'orders',
+}
 
 export const NAVIGATION: INavigationItem[][] = [
     [
@@ -47,6 +51,8 @@ export const TABS: IChoice[] = [
     },
 ];
 
+export const INGREDIENTS_TITLE = 'Соберите бургер';
+
 export const TYPE_TO_GROUP_NAME = {
     [IngredientTypeEnum.Bun]: 'Булки',
     [IngredientTypeEnum.Sauce]: 'Соусы',
@@ -54,7 +60,8 @@ export const TYPE_TO_GROUP_NAME = {
 };
 
 export const BUTTON_NAME = {
-    place_order: 'Оформить заказ'
+    place_order: 'Оформить заказ',
+    loading: 'Оформляется...'
 }
 
 export const MACRONUTRIENTS = {
@@ -71,4 +78,11 @@ export const ORDER_DETAILS = {
     label: 'идентификатор заказа',
     preparationLabel: 'Ваш заказ начали готовить',
     waitLabel: 'Дождитесь готовности на орбитальной станции',
+}
+
+export const ORDER_ERROR_MESSAGE = 'Ваш заказ исчез в чёрной дыре. Попробуйте ещё раз!';
+
+export const EMPTY_BURGER = {
+    bun: 'Выберите булку',
+    filling: 'Выберите начинку',
 }

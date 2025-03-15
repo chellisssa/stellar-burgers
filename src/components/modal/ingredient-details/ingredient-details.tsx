@@ -3,14 +3,14 @@ import { IIngredient } from "../../../types/ingredient.ts";
 import { useEffect, useState } from "react";
 import { MACRONUTRIENTS } from "../../../utils/constants.ts";
 import { IChoice } from "../../../types/common.ts";
+import { useAppSelector } from "../../../hooks/services.ts";
 
-interface IProps {
-    ingredient: IIngredient;
-}
+
 type MacronutrientKey = keyof typeof MACRONUTRIENTS;
 
-export function IngredientDetails({ ingredient }: IProps) {
+export function IngredientDetails() {
     const [infoList, setInfoList] = useState<IChoice[]>([]);
+    const { currentIngredient: ingredient } = useAppSelector(state => state.currentIngredient);
 
     useEffect(() => {
         const list: IChoice[] = []

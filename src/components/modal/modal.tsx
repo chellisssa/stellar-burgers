@@ -2,15 +2,14 @@ import styles from './modal.module.css';
 import ReactDOM from "react-dom";
 import { ModalOverlay } from "./modal-overlay/modal-overlay.tsx";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CLOSE_MODAL } from "../../services/actions/modal.ts";
+import { renderModalContent } from "../common/render-modal-content.tsx";
+import { useAppDispatch, useAppSelector } from "../../hooks/services.ts";
 
-interface IProps {
-    title?: string;
-    children: ReactNode;
-    onClose: () => void;
-}
-
-export function Modal({ title, children, onClose }: IProps) {
+export function Modal() {
+    const { isOpen, title, children, onClose } = useAppSelector((state) => state.modal);
+    const dispatch = useAppDispatch();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -20,17 +19,26 @@ export function Modal({ title, children, onClose }: IProps) {
         return () => {
             document.removeEventListener('keydown', handleEscKey);
         };
-    }, []);
+    }, [isOpen]);
+
+    if (!isOpen) return null;
 
     function handleEscKey(event: KeyboardEvent) {
         if (event.key === 'Escape') {
+            dispatch({type: CLOSE_MODAL});
+        }
+    }
+
+    function closeModal() {
+        if (typeof onClose === 'function') {
             onClose();
         }
+        dispatch({type: CLOSE_MODAL});
     }
 
     return ReactDOM.createPortal(
         <div className={`${styles.Modal} ${isVisible ? styles.active : ''}`}>
-            <ModalOverlay onClick={onClose}/>
+            <ModalOverlay onClick={closeModal}/>
             <div className={`${styles.content} pt-10 pr-10 pb-15 pl-10`}>
                 <header className={styles.header}>
                     {
@@ -39,13 +47,17 @@ export function Modal({ title, children, onClose }: IProps) {
                     }
                     <button
                         className={styles.closeButton}
-                        onClick={onClose}
+                        onClick={closeModal}
                     >
                         <CloseIcon type="primary"/>
                     </button>
                 </header>
                 <main>
-                    {children}
+                    {
+                        React.isValidElement(children)
+                            ? children
+                            : renderModalContent(children)
+                    }
                 </main>
             </div>
         </div>,

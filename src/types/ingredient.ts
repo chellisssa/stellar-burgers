@@ -4,7 +4,13 @@ export enum IngredientTypeEnum {
     Main = 'main',
 }
 
+export enum DragTypeEnum {
+    Ingredient = 'ingredient',
+    Filling = 'filling',
+}
+
 export interface IIngredient {
+    tempId?: string;
     __v: number;
     _id: string;
     calories: number;
