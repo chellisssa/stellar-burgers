@@ -16,7 +16,7 @@ export const modalReducer = (state: IModalState = initialState, action: IAction)
                 ...state,
                 isOpen: true,
                 title: (action.payload as Record<string, string>).title || '',
-                children: (action.payload as Record<string, JSX.Element>).component,
+                children: (action.payload as Record<string, JSX.Element>).children,
                 onClose: (action.payload as (Record<string, () => void> | null))?.onClose || null,
             }
         case CLOSE_MODAL:

@@ -4,26 +4,22 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import { useEffect, useRef, useState } from "react";
 import { useDrag } from 'react-dnd';
 import { useAppSelector } from "../../../hooks/services.ts";
-import { ROUTES } from "../../../utils/constants/routes.ts";
-import { Link } from "react-router-dom";
 
 interface IProps {
     ingredient: IIngredient;
-    from?: string;
+    onClick: () => void;
 }
 
-export function IngredientCard({ ingredient, from }: IProps) {
+export function IngredientCard({ ingredient, onClick}: IProps) {
     const { bun, filling } = useAppSelector(state => state.currentBurger);
     const [count, setCount] = useState<number>(0);
     const dragTarget = useRef<HTMLLIElement | null>(null);
     const [{opacity}, drag] = useDrag(() => ({
         type: DragTypeEnum.Ingredient,
         item: { ingredient },
-        collect: monitor => {
-            return ({
-                opacity: monitor.isDragging() ? .5 : 1,
-            })
-        }
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? .5 : 1,
+        })
     }));
     drag(dragTarget);
 
@@ -36,20 +32,18 @@ export function IngredientCard({ ingredient, from }: IProps) {
     }, [bun, filling]);
 
     return (
-        <li className={styles.IngredientCard} ref={dragTarget} style={{opacity}}>
-            <Link to={ROUTES.ingredient(ingredient._id)} state={{ from, ingredient }}>
-                <div className={styles.wrapper}>
-                    {count > 0 && <Counter count={count} /> }
-                    <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
-                    <p className={ `${styles.price} pt-1` }>
-                        <span className="text text_type_digits-default">{ingredient.price}</span>
-                        <CurrencyIcon type="primary" />
-                    </p>
-                    <p className={`${styles.name} text text_type_main-default pt-1`}>
-                        {ingredient.name}
-                    </p>
-                </div>
-            </Link>
+        <li className={styles.IngredientCard} ref={dragTarget} style={{opacity}} onClick={onClick}>
+            <div className={styles.wrapper}>
+                {count > 0 && <Counter count={count} /> }
+                <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
+                <p className={ `${styles.price} pt-1` }>
+                    <span className="text text_type_digits-default">{ingredient.price}</span>
+                    <CurrencyIcon type="primary" />
+                </p>
+                <p className={`${styles.name} text text_type_main-default pt-1`}>
+                    {ingredient.name}
+                </p>
+            </div>
         </li>
     )
 }

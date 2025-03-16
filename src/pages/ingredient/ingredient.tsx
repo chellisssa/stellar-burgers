@@ -19,6 +19,7 @@ export function IngredientPage() {
     const currentPath = useRef(location.pathname);
     const { ingredients } = useAppSelector(state => state.ingredients);
     const [currentIngredient, setCurrentIngredient] = useState<IIngredient | null>(null);
+    const [popupIngredient, setPopupIngredient] = useState<IIngredient | null>(null);
 
     useEffect(() => {
         if (currentPath.current !== location.pathname) {
@@ -42,16 +43,11 @@ export function IngredientPage() {
     }
 
     useEffect(() => {
-        if (location.state && location.state.from === ROUTES.base) {
-            dispatch({ type: SET_CURRENT_INGREDIENT, payload: location.state.ingredient });
-            dispatch({
-                type: OPEN_MODAL,
-                payload: {
-                    title: INGREDIENT_DETAILS_TITLE,
-                    component: <IngredientDetails/>,
-                    onClose: () => closeModal()
-                },
-            });
+        if (history.state && history.state.background) {
+            if (history.state.ingredient) {
+                setPopupIngredient(history.state.ingredient);
+            }
+            navigate(ROUTES.base);
         } else {
             if (ingredients.length === 0) return;
             const ingredient = ingredients.find((i: IIngredient) => i._id === params.id)
@@ -61,7 +57,24 @@ export function IngredientPage() {
             }
             dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient });
         }
-    }, [location.state, ingredients, dispatch]);
+    }, [ingredients, dispatch]);
+
+    useEffect(() => {
+        if (!popupIngredient) {
+            return;
+        }
+
+        window.history.replaceState({ background: true, ingredient: popupIngredient }, '', ROUTES.ingredient(popupIngredient?._id));
+        dispatch({ type: SET_CURRENT_INGREDIENT, payload: popupIngredient });
+        dispatch({
+            type: OPEN_MODAL,
+            payload: {
+                title: INGREDIENT_DETAILS_TITLE,
+                children: <IngredientDetails/>,
+                onClose: () => closeModal()
+            },
+        });
+    }, [popupIngredient]);
 
     if (ingredients.length === 0) {
         return (<Loading text={LOADING.ingredient} />);
