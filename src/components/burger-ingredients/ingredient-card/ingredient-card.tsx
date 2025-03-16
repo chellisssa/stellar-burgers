@@ -37,7 +37,7 @@ export function IngredientCard({ ingredient, from }: IProps) {
 
     return (
         <li className={styles.IngredientCard} ref={dragTarget} style={{opacity}}>
-            {/*<Link to={ROUTES.ingredient(ingredient._id)} state={{ from, ingredient }}>*/}
+            <Link to={ROUTES.ingredient(ingredient._id)} state={{ from, ingredient }}>
                 <div className={styles.wrapper}>
                     {count > 0 && <Counter count={count} /> }
                     <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
@@ -49,7 +49,7 @@ export function IngredientCard({ ingredient, from }: IProps) {
                         {ingredient.name}
                     </p>
                 </div>
-            {/*</Link>*/}
+            </Link>
         </li>
     )
 }

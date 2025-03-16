@@ -1,4 +1,4 @@
-import { Reducer, useEffect, useReducer } from "react";
+import { Reducer, useReducer } from "react";
 import { IFetchState, TFetchAction } from "./types";
 import { request } from "../utils/request.ts";
 import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_ERROR } from "./types";

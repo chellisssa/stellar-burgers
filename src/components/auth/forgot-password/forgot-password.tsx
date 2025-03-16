@@ -8,7 +8,7 @@ import { ENDPOINTS } from "../../../utils/constants.ts";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../utils/constants/routes.ts";
 import { isValidEmail } from "../../../utils/is-valid-email.ts";
-import { IBaseAuthRes } from "../../../types/auth.ys.ts";
+import { IBaseRes } from "../../../types/common.ts";
 
 function InputChildren({ value, setValue }: {
     value: string;
@@ -45,7 +45,7 @@ export function ForgotPassword() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if ((payload as IBaseAuthRes)?.success) {
+        if ((payload as IBaseRes)?.success) {
             navigate(ROUTES.resetPassword, { state: { from: location.pathname }});
         }
     }, [payload]);

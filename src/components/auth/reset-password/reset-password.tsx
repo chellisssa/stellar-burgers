@@ -7,7 +7,7 @@ import { ROUTES } from "../../../utils/constants/routes.ts";
 import { useFetch } from "../../../hooks/useFetch.ts";
 import { ENDPOINTS } from "../../../utils/constants.ts";
 import { useNavigate } from "react-router-dom";
-import { IBaseAuthRes } from "../../../types/auth.ts";
+import { IBaseRes } from "../../../types/common.ts";
 
 interface Props {
     password: string;
@@ -60,7 +60,7 @@ export function ResetPassword() {
 
 
     useEffect(() => {
-        if ((payload as IBaseAuthRes)?.success) {
+        if ((payload as IBaseRes)?.success) {
             navigate(ROUTES.login);
         }
     }, [payload]);
