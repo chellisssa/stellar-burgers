@@ -1,0 +1,24 @@
+.ProfileTabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    width: 320px;
+    height: 64px;
+    color: var(--text-inactive-color);
+    transition: opacity .3s ease;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: var(--text-primary-color);
+    cursor: default;
+    pointer-events: none;
+}
+
+.tab:not(.active):hover {
+    opacity: .7;
+}

@@ -13,13 +13,19 @@ export function IngredientDetails() {
     const { currentIngredient: ingredient } = useAppSelector(state => state.currentIngredient);
 
     useEffect(() => {
-        const list: IChoice[] = []
-        for (const key in MACRONUTRIENTS) {
-            const mcKey = key as MacronutrientKey;
-            list.push({ label: MACRONUTRIENTS[mcKey], value: ingredient[mcKey as keyof IIngredient] });
+        if (ingredient) {
+            const list: IChoice[] = []
+            for (const key in MACRONUTRIENTS) {
+                const mcKey = key as MacronutrientKey;
+                list.push({ label: MACRONUTRIENTS[mcKey], value: ingredient[mcKey as keyof IIngredient] });
+            }
+            setInfoList(list);
         }
-        setInfoList(list);
-    }, []);
+    }, [ingredient]);
+
+    if (!ingredient) {
+        return null;
+    }
 
     return (
         <div className={ `${styles.IngredientDetails} pl-15 pr-15 ` }>

@@ -5,7 +5,7 @@ import styles from './constructor-item.module.css';
 import { deleteIngredient, UPDATE_FILLINGS } from "../../../services/actions/current-burger.ts";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragTypeEnum } from "../../../types/ingredient.ts";
-import { useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
+import { AppThunkDispatch, useAppDispatch, useAppSelector } from "../../../hooks/services.ts";
 
 interface IProps {
     id?: string;
@@ -16,7 +16,7 @@ interface IProps {
     isLocked?: boolean;
     isActive?: boolean;
     index?: number;
-    moveCard?: (dragIndex, hoverIndex) => void;
+    moveCard?: (dragIndex: number, hoverIndex: number) => void;
 }
 
 interface DragItem {
@@ -28,7 +28,7 @@ interface DragItem {
 export function ConstructorItem({id, type, name, image, price, isLocked, isActive, index, moveCard}: IProps) {
     const initialCardsRef = useRef<string[]>([]);
     const { filling } = useAppSelector(state => state.currentBurger);
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch<AppThunkDispatch>();
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [{opacity}, drag] = useDrag({
@@ -41,7 +41,7 @@ export function ConstructorItem({id, type, name, image, price, isLocked, isActiv
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0 : 1,
         }),
-        end: (item, monitor) => {
+        end: (_, monitor) => {
             const didDrop = monitor.didDrop()
             if (!didDrop) {
                 dispatch({ type: UPDATE_FILLINGS, payload: initialCardsRef.current});
@@ -49,7 +49,7 @@ export function ConstructorItem({id, type, name, image, price, isLocked, isActiv
         },
     });
 
-    const [_, drop] = useDrop<
+    const [, drop] = useDrop<
         DragItem,
         void,
         { handlerId: Identifier | null }
@@ -64,8 +64,8 @@ export function ConstructorItem({id, type, name, image, price, isLocked, isActiv
             if (!ref.current) {
                 return
             }
-            const dragIndex = item.index;
-            const hoverIndex = index;
+            const dragIndex: number = item.index;
+            const hoverIndex: number = Number(index);
 
             if (dragIndex === hoverIndex) {
                 return;

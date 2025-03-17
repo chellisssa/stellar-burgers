@@ -5,11 +5,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useEffect, useState } from "react";
 import { CLOSE_MODAL } from "../../services/actions/modal.ts";
 import { renderModalContent } from "../common/render-modal-content.tsx";
-import { useAppDispatch, useAppSelector } from "../../hooks/services.ts";
+import { AppThunkDispatch, useAppDispatch, useAppSelector } from "../../hooks/services.ts";
 
 export function Modal() {
     const { isOpen, title, children, onClose } = useAppSelector((state) => state.modal);
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch<AppThunkDispatch>();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -36,6 +36,10 @@ export function Modal() {
         dispatch({type: CLOSE_MODAL});
     }
 
+    if (!children) {
+        return;
+    }
+
     return ReactDOM.createPortal(
         <div className={`${styles.Modal} ${isVisible ? styles.active : ''}`}>
             <ModalOverlay onClick={closeModal}/>
@@ -56,7 +60,7 @@ export function Modal() {
                     {
                         React.isValidElement(children)
                             ? children
-                            : renderModalContent(children)
+                            : renderModalContent(children as React.ComponentType)
                     }
                 </main>
             </div>

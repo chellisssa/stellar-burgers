@@ -32,16 +32,18 @@ export function IngredientCard({ ingredient, onClick}: IProps) {
     }, [bun, filling]);
 
     return (
-        <li className={styles.IngredientCard} onClick={onClick} ref={dragTarget} style={{opacity}}>
-            {count > 0 && <Counter count={count} /> }
-            <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
-            <p className={ `${styles.price} pt-1` }>
-                <span className="text text_type_digits-default">{ingredient.price}</span>
-                <CurrencyIcon type="primary" />
-            </p>
-            <p className={`${styles.name} text text_type_main-default pt-1`}>
-                {ingredient.name}
-            </p>
+        <li className={styles.IngredientCard} ref={dragTarget} style={{opacity}} onClick={onClick}>
+            <div className={styles.wrapper}>
+                {count > 0 && <Counter count={count} /> }
+                <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
+                <p className={ `${styles.price} pt-1` }>
+                    <span className="text text_type_digits-default">{ingredient.price}</span>
+                    <CurrencyIcon type="primary" />
+                </p>
+                <p className={`${styles.name} text text_type_main-default pt-1`}>
+                    {ingredient.name}
+                </p>
+            </div>
         </li>
     )
 }

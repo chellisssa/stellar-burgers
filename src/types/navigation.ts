@@ -6,4 +6,5 @@ export interface INavigationItem {
     id: string;
     icon: FC<TIconProps>;
     position: 'left' | 'right';
+    link: string;
 }

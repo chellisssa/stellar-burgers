@@ -4,6 +4,7 @@ import {
     GET_INGREDIENTS_REQUEST,
 } from '../actions/ingredients.ts';
 import { IIngredientsState } from "../../types/states.ts";
+import { IAction } from "../../hooks/services.ts";
 
 const initialState: IIngredientsState = {
     ingredients: [],
@@ -11,7 +12,7 @@ const initialState: IIngredientsState = {
     ingredientsError: false,
 };
 
-export const ingredientsReducer = (state: IIngredientsState = initialState, action) => {
+export const ingredientsReducer = (state: IIngredientsState = initialState, action: IAction) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

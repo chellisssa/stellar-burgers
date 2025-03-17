@@ -1,20 +1,22 @@
 import styles from './ingredients-group.module.css';
 import { IIngredient } from "../../../types/ingredient.ts";
 import { IngredientCard } from "../ingredient-card/ingredient-card.tsx";
+import { forwardRef } from "react";
+import { AppThunkDispatch, useAppDispatch } from "../../../hooks/services.ts";
 import { RESET_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from "../../../services/actions/current-ingredient.ts";
 import { OPEN_MODAL } from "../../../services/actions/modal.ts";
-import { forwardRef } from "react";
-import { IngredientDetails } from "../../modal/ingredient-details/ingredient-details.tsx";
 import { INGREDIENT_DETAILS_TITLE } from "../../../utils/constants.ts";
-import { useAppDispatch } from "../../../hooks/services.ts";
+import { IngredientDetails } from "../../modal/ingredient-details/ingredient-details.tsx";
+import { ROUTES } from "../../../utils/constants/routes.ts";
 
 interface IProps {
     title: string;
     ingredients: IIngredient[];
+    from?: string;
 }
 
 export const IngredientsGroup = forwardRef<HTMLDivElement, IProps>(({title, ingredients}, ref) => {
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch<AppThunkDispatch>();
 
      function clickIngredient(el: IIngredient) {
          dispatch({ type: SET_CURRENT_INGREDIENT, payload: el});
@@ -26,6 +28,7 @@ export const IngredientsGroup = forwardRef<HTMLDivElement, IProps>(({title, ingr
                  onClose: () => dispatch({ type: RESET_CURRENT_INGREDIENT })
              },
          });
+         window.history.replaceState({ background: true, ingredient: el }, '', ROUTES.ingredient(el._id));
     }
 
     return (

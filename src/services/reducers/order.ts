@@ -1,5 +1,6 @@
 import { SET_ORDER_ERROR, SET_ORDER_REQUEST, SET_ORDER_SUCCESS, SET_TOTAL_PRICE } from "../actions/order.ts";
 import { IOrderState } from "../../types/states.ts";
+import { IAction } from "../../hooks/services.ts";
 
 const initialState: IOrderState = {
     totalPrice: 0,
@@ -8,12 +9,12 @@ const initialState: IOrderState = {
     orderError: false,
 };
 
-export const orderReducer = (state: IOrderState = initialState, action) => {
+export const orderReducer = (state: IOrderState = initialState, action: IAction) => {
     switch(action.type) {
         case SET_TOTAL_PRICE:
             return {
                 ...state,
-                totalPrice: action.totalPrice,
+                totalPrice: action.payload,
             }
         case SET_ORDER_REQUEST:
             return {

@@ -7,21 +7,27 @@ import { EmptyItem } from "./empty-item/empty-item.tsx";
 import { useDrop } from 'react-dnd';
 import { MOVE_FILLING, selectIngredient } from "../../services/actions/current-burger.ts";
 import { EMPTY_BURGER } from "../../utils/constants.ts";
-import { useAppDispatch, useAppSelector } from "../../hooks/services.ts";
+import { AppThunkDispatch, useAppDispatch, useAppSelector } from "../../hooks/services.ts";
 
 export function BurgerConstructor() {
     const { bun, filling } = useAppSelector(state => state.currentBurger);
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch<AppThunkDispatch>();
     const [maxListHeight, setMaxListHeight] = useState<number>(0);
     const listRef: MutableRefObject<HTMLUListElement | null> = useRef<HTMLUListElement | null>(null);
     const dropTarget = useRef<HTMLUListElement | null>(null);
 
-    const [{canDrop, itemType}, drop] = useDrop(() => ({
+    const [{canDrop, itemType}, drop] = useDrop<
+        { ingredient: IIngredient },
+        unknown,
+        { canDrop: boolean; itemType: IngredientTypeEnum | null }
+    >(() => ({
         accept: DragTypeEnum.Ingredient,
-        collect: monitor => ({
-            canDrop: monitor.canDrop(),
-            itemType: monitor.getItem()?.ingredient?.type as IngredientTypeEnum || null,
-        }),
+        collect: monitor => {
+            return ({
+                canDrop: monitor.canDrop(),
+                itemType: monitor.getItem()?.ingredient?.type as IngredientTypeEnum || null,
+            })
+        },
         drop: ({ ingredient }) => {
             dispatch(selectIngredient(ingredient));
         },
@@ -33,7 +39,6 @@ export function BurgerConstructor() {
         setMaxListHeight(maxHeight);
     }, []);
 
-
     function getMaxListHeight(): number {
         if (!listRef.current) {
             return 0;
@@ -42,7 +47,7 @@ export function BurgerConstructor() {
         return window.innerHeight - listRef.current?.getBoundingClientRect().top - OFFSET_BOTTOM;
     }
 
-    const handleMoveCard = (dragIndex, hoverIndex) => {
+    function handleMoveCard(dragIndex: number, hoverIndex: number): void {
         dispatch({
             type: MOVE_FILLING,
             payload: {
@@ -50,7 +55,7 @@ export function BurgerConstructor() {
                 hoverIndex,
             }
         });
-    };
+    }
 
     return (
         <section className={`${styles.BurgerConstructor} mt-25 pr-4 pl-4`}>
@@ -95,7 +100,6 @@ export function BurgerConstructor() {
                                             isActive={canDrop && itemType !== IngredientTypeEnum.Bun}
                                             index={index}
                                             moveCard={handleMoveCard}
-
                                         />
                                     </li>
                                 ))
